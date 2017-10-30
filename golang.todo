@@ -1,0 +1,227 @@
+Tasks : 
+  ☐ going through the normal setup for go with the package mgmt and also for the version management 
+  ☐ going through the syntax of go 
+  ☐ Structuring of the go app 
+  ☐ Connecting to the databases
+  ☐ Trying out with the rest api and the way process works  
+  ☐ Checking out with the deployment for the golang 
+  ☐ Trying out the testing in the golan, with  the native test module as well as some external package  
+
+
+
+ Notes: 
+   ☐ We can set go poath somewhere else as well, which is like the workspace in our normal coding nomenclature 
+     To set up the GOPATH  :
+      ☐ go env - will list the path of the environment setup in the go 
+      ☐ export GOPATH=$HOME/working_directory_path
+      ☐ now write some simple function  in the file.
+      ☐ go build - will just compile dependencies and packages 
+      ☐ go install - compile and install packages and dependencies - once you do this step you will get the pkg folder, which contains the set for the existing packages 
+      ☐ we can create src folder to store our structure for the code
+      ☐ If you define function name starting with the capital letter then only it will be exported otherwise it will not export  
+      ☐ go build will just build the code and check if anything wrong in that. it will not export or create any bin files 
+      ☐ Go programmers typically keep all the go code in the single workspace 
+      ☐ Folder structure for the go workspace is like 
+        .
+        ├── bin
+        │   └── hello
+        ├── ex2.go
+        ├── pkg
+        │   └── linux_amd64
+        │       └── github.com
+        │           └── proj1
+        │               └── string.a
+        └── src
+            └── github.com
+                └── proj1
+                    ├── hello
+                    │   └── hello.go
+                    └── string
+                        └── string.go
+     ☐  go install github.com/user./hello will install the go project anywhere in the system . you need not go to that particular folder and run it.
+     ☐ When done go install. go stores the compile package object in the pkg folder so that next time it does not have to compile it unnecessarily 
+     ☐ Convection for the naming is in the go lang for the package is that the last name will be treated as the name fo the package that should be listed in the file 
+     ☐ In order to carry out with the test need to create a file with the _test 
+     ☐ go test to run the tests 
+     ☐ go get temote_package path will get the remote package from the remote localtion 
+     ☐ In case already you have done go get, go get will just to go install and will not fetch the package from the remote server 
+
+Go commands : 
+ go build:
+ ☐ go build - just compiles it will never create a binary file, only if the package is the main file then only it will generate the executable in the same path where the running of the code command is done. important hing to note is that bin/executable  file will be created in the same folder as in here the command has been run.
+ ☐ In order to build only one file from the list of the files in the folder go type go build file_name 
+ go clean : 
+   ☐ to clean the unwanted files in the build process
+ go fmt and gofmt :
+  ☐ are the pacjages for formatting the go code 
+  ☐ It will give you most of the things where in you can do the things liek printing of the things to the outport 
+ go get: 
+  ☐ first code is downloaded 
+  ☐ and the executed using go install 
+
+  go test : 
+    ☐ this includes all files which are suffixed with the word _test
+    ☐ 
+  ☐ 
+
+
+
+Go basic Knowledge : 
+ ☐ Go path has the best advantage. When we are setting up the github.com folder we need not take the pain of making it available the way we make it in the php using ../../. we can directly give the path name with the github,com and then we can do go install. Which will compile and make all packages available to the src file or whichever fike included 
+ ☐ For go you need not set up the virtual env or repos in production. You can directly compile and deeploy the go package
+ ☐ Go programs are composed by packages
+ ☐ package main tells us that 
+ ☐ and main package is always compiled to the program instead of the package file  .a
+ ☐ fodler name and the name mentioned in the package can be different
+ ☐ main is the only file which does not require any folder while compiling
+ 
+
+Foundation:
+  ☐ By default variables defined in the golang are false if they are of type boolean 
+  
+  // define a variable with name “variableName” and type "type"
+var variableName type
+ ☐ Define multiple variables.
+// define three variables which types are "type"
+var vname1, vname2, vname3 type
+ ☐ Define a variable with initial value.
+// define a variable with name “variableName”, type "type" and value "value"
+var variableName type = value
+
+ ☐ Define multiple variables with initial values.
+/*
+    Define three variables with type "type", and initialize their values.
+    vname1 is v1, vname2 is v2, vname3 is v3
+*/
+var vname1, vname2, vname3 type = v1, v2, v3
+
+/*
+    Define three variables without type "type" and without keyword "var", and initialize their values.
+    vname1 is v1，vname2 is v2，vname3 is v3
+*/
+ ☐ vname1, vname2, vname3 := v1, v2, v3
+ ☐ Go also supports imaginary numbers 
+ ☐ Out of which complex64 means real part is 23 bit and complex part is 32 bit 
+ ☐ 
+
+
+
+ String: 
+  You cannot change the string variable directly 
+  ☐ if you want to change, you need to convert the string into the byte type first and then once done with the change to the string type 
+  ☐ We use + operator to combine 2 strings 
+  ☐ We cannot change string values by instance but we can get the values of the string by instance 
+  ☐ It is also possible to define the variables in the form of group 
+  ☐ iota keyword is to make it enum  - it begins with the 0 and is increased by 1
+  ☐ values of the iota are same in one line 
+  ☐ 
+
+  Some of the rules for the Go:
+  ☐ Any variables that begins with the capital are exportable otherwise private 
+  ☐ same rules apply for the functions and constants as well 
+  ☐ 
+
+
+  array, slice, map: 
+   ☐ The way to define the array variables 
+   ☐ a := [3]int{1, 2, 3} // define an int array with 3 elements
+
+    b := [10]int{1, 2, 3} // in this case the rest of the elements will be default which is 0
+    ☐  By default values of the variables in the go are already assigned. So you will never get unsigned variable error.
+    ☐ default value of the int is 0 where as that fo the string is empty string
+    ☐  Concept of the multi dimensional array is also same like c in the go. So we have to define the type of the array and the 
+    // define a two-dimensional array with 2 elements, and each element has 4 elements.
+doubleArray := [2][4]int{[4]int{1, 2, 3, 4}, [4]int{5, 6, 7, 8}}
+
+// The declaration can be written more concisely as follows.
+easyArray := [2][4]int{{1, 2, 3, 4}, {5, 6, 7, 8}}
+
+
+Slice: 
+  ☐ slice is the data type where in we don't know how long the array will be, only when we know the size of the array it is good to use array 
+  ☐ slice is not a dynamic array but it is the reference type 
+  ☐ It is just like defining the array, but we exclude the length in the square brackets
+  ☐ slice is a reference type so any change will affect other variables to the same slice or array 
+  ☐ so if the slice is ben assigned to any of the variables then change in those variables will also change the slice variable 
+
+Map: 
+  ☐ map in the go lang is similar to the hash in ruby or dictionary in the python 
+  ☐ whcih has the key and the value pair, Its accessibility is similar like that of the slice but the only difference is slice can contain only int as the index 
+  way to define the map 
+  var numbers map[string] int
+
+  another way of defining the map
+  numbers := make(map[string]int)
+  ☐ We use delete to delete the elements in the with the key for particular map
+
+
+make , new : 
+ ☐ make does memory allocation for the built in models such as map, slice, channel 
+ ☐ new is for types memory allocation
+ ☐ make will create the type of the variable and the default value given fo for the particular will be 0
+ ☐  IN case of the new we wil get the reference 
+ ☐ where as in the case of make we will not get any of the reference 
+ ☐ We cannot create string value pair of the new map where as we can create for the map 
+ ☐ 
+
+ Control Stmt:
+  ☐ 3 ways of the flow control is 
+  ☐ - control
+  ☐ - conditional 
+  ☐ - unconditional 
+  ☐ we can have intiialisation of the variable in the if before the conditional statement, and the scope of that variable will be for the if conditional statement only.
+  ☐ 
+
+  For : 
+   ☐ for has the ability to read data from the array, slice, map and string when it is used together with range 
+   ☐ In go we dont have while loop, we only have the for loop 
+ ☐ we can use range only in terms of the array, slice, map or the string and not in nay other case 
+ ☐ In case we want to make use of the for loop as that like the while loop what we can do is just use the middle conidtional statement ignoring other variables 
+ ☐ 
+ i := 0
+ for i < 10{
+   fmt.Printf('my var ', i)
+   i++
+ }
+ ☐ Use of the break and continue is similar to that in the other languages 
+ 
+
+ Switch: 
+   ☐ strange thing is we do not have to use the break in the switch like normal programmin g languages 
+   ☐ we can dorectly use the statement and the case 
+   ☐ If you want to continue the matching of the case in the statement, you will have to use the fallthrough
+   ☐ 
+
+
+
+   Funciton: 
+    
+    func funcName(input1 type1, input2 type2) (output1 type1, output2 type2) {
+      // function body
+      // multi-value return
+      return value1, value2
+    }
+
+    ☐ Need of the brackets in the go is not needed in case it is only 1 value 
+    ☐ there are return types and the input types for the arguments in the go 
+    ☐ Go is capable of returning more then 1 variable as well 
+    
+    ☐ We could also opt to ignore the names while returning the type of the variables 
+    func funcName(input1 type1, input2 type2) (output1 type1, output2 type2){
+      output1 := 1
+      output2 := 2
+      return 
+    }
+
+     this particular will instlal the variables 
+
+
+
+    Variadic Function:
+     ☐ Go supports functions with variable number of arguments. This functions are called as variadic, i.e function allows an uncertain number of the arguments 
+     ☐ unlimited argument functions 
+     ☐ in variadic functions we can pass as many number of arguments as possible 
+
+
+     Defer Function : 
+       ☐ Whenever go func encounter the defer keyword it will skip that line and go to the next line of execution and when done with the execution of the function with the non defered word. it will go and start executing functions in the revere order of the defer keyword
