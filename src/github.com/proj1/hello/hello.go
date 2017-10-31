@@ -7,6 +7,8 @@ import (
 var isActive bool
 var enabled, disabled = true, false
 
+type testInt func(int) bool // function type fo a variable
+
 func main() {
 	//fmt.Println(string.Reverse("What's up? Ankita the Great!"))
 	//const PI float32 = 3.1467
@@ -120,15 +122,42 @@ func main() {
 
 
 	//learning deffer function
+	//
+	//defer doSomeThing()
+	//doSomeThingElse()
+	//defer doSomeThing1()
+	//doSomeThingElse2()
 
-	defer doSomeThing()
-	doSomeThingElse()
-	defer doSomeThing1()
-	doSomeThingElse2()
+	//Understanding recovery and panic
+
+	name := ""
+
+	checkNameAndRecover(name)
+
 }
 //	Learning Functions
 
 
+
+func checkName(name string){
+	if(name == ""){
+		panic("name cannot be balnk")
+	}
+}
+
+
+func checkNameAndRecover(name string){
+
+	checkName(name)
+
+	defer func() {
+		if x:= recover(); x!= nil{
+			fmt.Println("We are in recovery mode")
+		}else{
+			fmt.Println("name = ", name)
+		}
+	}()
+}
 
 func maxNum(a int, b int) int{
 	if(a > b){
@@ -170,4 +199,3 @@ func doSomeThingElse2(){
 func doSomeThing1(){
 	fmt.Println("doSomething1()")
 }
-//understanding defer

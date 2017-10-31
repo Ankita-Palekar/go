@@ -225,3 +225,8 @@ make , new :
 
      Defer Function : 
        ☐ Whenever go func encounter the defer keyword it will skip that line and go to the next line of execution and when done with the execution of the function with the non defered word. it will go and start executing functions in the revere order of the defer keyword
+
+
+  Functions as values and types :
+    ☐ functions are also variables in go and we can use type to define them. Functions that hvae the same signature can be seen as the same type
+    ☐ type typeName func(input1 inputType1, input2 inputType2 [, ...]) (op1 opType1, op2 opType2)
