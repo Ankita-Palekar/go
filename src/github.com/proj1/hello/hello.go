@@ -2,12 +2,36 @@ package main
 
 import (
 	"fmt"
+	"runtime"
+	"encoding/json"
 )
 
 var isActive bool
 var enabled, disabled = true, false
 
 type testInt func(int) bool // function type fo a variable
+
+const (
+	WHITE  = iota
+	BLACK
+	BLUE
+	RED
+	YELLOW
+)
+
+type Box struct {
+	width, height, depth float64
+	color                Color
+}
+
+type Color byte
+
+type BoxList []Box // a slice of box
+
+// this is the method for the struct Box
+func (b Box) Volume() float64 {
+	return b.width * b.height * b.depth
+}
 
 func main() {
 	//fmt.Println(string.Reverse("What's up? Ankita the Great!"))
@@ -77,49 +101,45 @@ func main() {
 	//	}
 	//	fmt.Println("sum is equal to ", sum)
 
-
 	//example with the range and the key value pair
-//	for k, v := range numbers{
-//		fmt.Println("map's key:", k)
-//		fmt.Println("map's val:", v)
-//	}
-//
-//	fmt.Println("-----------------")
-//
-//	myName := "ankita"
-////	example if you want to ignore the key value pair
-//	for _, v := range myName{
-//		//fmt.Println("map's key:", k)
-//		fmt.Println("map's val:", v)
-//	}
+	//	for k, v := range numbers{
+	//		fmt.Println("map's key:", k)
+	//		fmt.Println("map's val:", v)
+	//	}
+	//
+	//	fmt.Println("-----------------")
+	//
+	//	myName := "ankita"
+	////	example if you want to ignore the key value pair
+	//	for _, v := range myName{
+	//		//fmt.Println("map's key:", k)
+	//		fmt.Println("map's val:", v)
+	//	}
 
+	////switch statement
+	//	i := 10
+	//	switch i {
+	//	case 1:
+	//		fmt.Println("i is equal to 1")
+	//	case 2, 3, 4:
+	//		fmt.Println("i is equal to 2, 3 or 4")
+	//	case 10:
+	//		fmt.Println("i is equal to 10")
+	//	default:
+	//		fmt.Println("All I know is that i is an integer")
+	//	}
 
-////switch statement
-//	i := 10
-//	switch i {
-//	case 1:
-//		fmt.Println("i is equal to 1")
-//	case 2, 3, 4:
-//		fmt.Println("i is equal to 2, 3 or 4")
-//	case 10:
-//		fmt.Println("i is equal to 10")
-//	default:
-//		fmt.Println("All I know is that i is an integer")
-//	}
-
-
-//maxNum := maxNum(0, 1889)
-//fmt.Println(maxNum)
-//
-//
-//sum, product := sumAndProduct(1, 2)
-//
-//fmt.Println("sum = ", sum, "product = ", product)
-//
-////using variadic funcitons
-//
-//	addNumbers(1,2,3,4,5,6,7,8,9,10)
-
+	//maxNum := maxNum(0, 1889)
+	//fmt.Println(maxNum)
+	//
+	//
+	//sum, product := sumAndProduct(1, 2)
+	//
+	//fmt.Println("sum = ", sum, "product = ", product)
+	//
+	////using variadic funcitons
+	//
+	//	addNumbers(1,2,3,4,5,6,7,8,9,10)
 
 	//learning deffer function
 	//
@@ -128,52 +148,139 @@ func main() {
 	//defer doSomeThing1()
 	//doSomeThingElse2()
 
-	//Understanding recovery and panic
+	// ==== Understanding recovery and panic
 
-	name := ""
+	//name := ""
+	//
+	//checkNameAndRecover(name)
 
-	checkNameAndRecover(name)
+	//	Trying out with the custom types
 
+	//understanding the go routines
+
+	//go sayhello("hello Ankita")
+	//sayhello("world")
+
+	//understanding channel
+
+	//a := []int{2, 3, 4, 6, 7, 8}
+	//c := make(chan int)
+	//go sum(a[:len(a)/2], c)
+	//go sum(a[len(a)/2:], c)
+	//
+	//x, y := <-c, <-c
+	//
+	//fmt.Println("x = ", x, "y = ", y)
+
+	// understanding buffered channl
+
+	//
+	//c := make(chan int, 2)
+	//c <- 1
+	//c <- 2
+	//c <- 4
+	//fmt.Println(<-c)
+	//fmt.Println(<-c)
+
+	//	understanding the range and the closing off the channel
+
+	//c := make(chan int, 10)
+	//go fibonnaci(cap(c), c)
+	//
+	//for i:= range c {
+	//	fmt.Println(i)
+	//}
+
+	//	channel usage using the select
+
+	c := make(chan int)
+	quit := make(chan int)
+	go func() {
+		for i := 0; i < 10; i++ {
+			fmt.Println(<-c)
+		}
+		quit <- 0
+	}()
+
+	fibonnaciUsingSelect(c, quit)
+	fibonnaciUsingSelect(c, quit)
 }
+func fibonnaciUsingSelect(c, q chan int) {
+	x, y := 1, 1
+
+	for {
+		select {
+		case c <- x:
+			x, y = y, x+1
+
+		case <-q:
+			fmt.Println("quit")
+			return
+		}
+	}
+}
+
+func fibonnaci(n int, c chan int) {
+	x, y := 1, 1
+
+	for i := 1; i < n; i++ {
+		c <- x
+		x, y = y, x+y
+	}
+	close(c)
+}
+
+func sum(a []int, c chan int) {
+	total := 0
+	for _, v := range a {
+		total += v
+	}
+
+	c <- total
+}
+
 //	Learning Functions
 
+func sayhello(s string) {
+	for i := 0; i < 5; i++ {
+		runtime.Gosched()
+		fmt.Println(s)
+	}
+}
 
-
-func checkName(name string){
-	if(name == ""){
+func checkName(name string) {
+	if (name == "") {
 		panic("name cannot be balnk")
 	}
 }
 
-
-func checkNameAndRecover(name string){
+func checkNameAndRecover(name string) {
 
 	checkName(name)
 
 	defer func() {
-		if x:= recover(); x!= nil{
+		if x := recover(); x != nil {
 			fmt.Println("We are in recovery mode")
-		}else{
+		} else {
 			fmt.Println("name = ", name)
 		}
 	}()
 }
 
-func maxNum(a int, b int) int{
-	if(a > b){
+func maxNum(a int, b int) int {
+	if (a > b) {
 		return a
 	}
 	return b
 }
 
-
-func sumAndProduct(a int, b int) (int, int){
+func sumAndProduct(a int, b int) (int, int) {
 	return a + b, a * b
 }
 
 //variadic functions
 
-func addNumbers(nums ... int){
+func addNumbers(nums ... int) {
 	var total int
 
 	for _, num := range nums {
@@ -183,19 +290,18 @@ func addNumbers(nums ... int){
 	fmt.Println("total sum = ", total)
 }
 
-
-func doSomeThingElse(){
+func doSomeThingElse() {
 	fmt.Println("doSomeThingElse()")
 }
 
-func doSomeThing(){
+func doSomeThing() {
 	fmt.Println("doSomeThing()")
 }
 
-func doSomeThingElse2(){
+func doSomeThingElse2() {
 	fmt.Println("doSomeThingElse2()")
 }
 
-func doSomeThing1(){
+func doSomeThing1() {
 	fmt.Println("doSomething1()")
 }

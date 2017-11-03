@@ -6,6 +6,7 @@ Tasks :
   ☐ Trying out with the rest api and the way process works  
   ☐ Checking out with the deployment for the golang 
   ☐ Trying out the testing in the golan, with  the native test module as well as some external package  
+  ☐ Checking mailing in the golang
 
 
 
@@ -230,3 +231,49 @@ make , new :
   Functions as values and types :
     ☐ functions are also variables in go and we can use type to define them. Functions that hvae the same signature can be seen as the same type
     ☐ type typeName func(input1 inputType1, input2 inputType2 [, ...]) (op1 opType1, op2 opType2)
+    ☐ main use of this type of feature is we can use it to pass it as the value 
+    ☐ 
+
+
+ Channel :
+   ☐ Go routine runs in the same memory address routine space, so you to maintain sync when you want to communicate between 2 go routines 
+   ☐ Channel is like the 2 way pip line in the unix shell 
+   ci = make(chan int) // creating of the channel 
+
+   sending and reciving of the data in the channel 
+
+   ch <- v    // send v to channel ch.
+   v := <-ch  // receive data from ch, and assign to v
+ ☐ sending and reciving data in channel blocks by default 
+ ☐ go routine will not continue when receving data from empty channel or it will continue untill the data it receives from the channel. till then it will be blocked 
+ 
+
+ Buffered Channel in Go: 
+  ☐ In case of buffered channel we can send only the data specified while making the channel else it will block the channel 
+  
+ Range And Close:
+  ☐ cap - returns capacity of the argument passed
+  ☐ once channel starts reading it will not stop untill channel is closed, that is why it adviced to close the channel once used 
+  ☐ channel should always be clsoed  in the producer part and no tin the consumer,
+  ☐ Another thing is channel i snot like files, wheere in you have to close it. Only once we find that it is useless we need to close it.  
+
+
+  Select: 
+    ☐ So far we have used only one channel , 
+    ☐ in order to deal with the more then one channel we have something called as select 
+    ☐ select is blocking by default and it will execute only when there is data to send or reciver from any of that channel 
+    ☐ and if there are multiple channels then the select will selct channel randomly
+    
+
+
+ web Approach in Go:
+  ☐ We dont need any of the web server since go listen by default to tcp 
+  
+ Go routine in conn :
+  ☐ Go usees go routine for every job initiated by Conn in order to achieve high concurrency and performance so every job is independent
+  ☐ That is how it can work concurrently 
+  
+
+ ☐ In case we want to have custom routes we can do that as well
+ ☐ In taht case we use the second parameter of the ListenAndServe which will take the handler or Mux which wil lbe executed internally without the function being passed to the HandlFunc 
+
