@@ -33,7 +33,7 @@ func main() {
 	stmt, err := db.Prepare("INSERT into customers  (id, name, email, phone_no) VALUES (?, ?, ?, ?) ")
 	checkErr(err)
 
-	res, err := stmt.Exec(nil, "Ankia", "ankita@gmail.com", "9158381548")
+	res, err := stmt.Exec(nil, "Ankita", "ankita@gmail.com", "9158381548")
 	checkErr(err)
 
 	id, err := res.LastInsertId()

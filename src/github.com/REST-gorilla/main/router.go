@@ -6,18 +6,25 @@ import (
 )
 
 func NewRouter() *mux.Router {
-
 	router := mux.NewRouter().StrictSlash(true)
 	for _, route := range routes {
 		var handler http.Handler
 		handler = route.HandlerFunc
 		handler = Logger(handler, route.Name)
 
-		router.
-		Methods(route.Method).
-			Path(route.Pattern).
-			Name(route.Name).
-			Handler(route.HandlerFunc)
+		if (route.Name != "GetToken") {
+			router.
+			Methods(route.Method).
+				Path(route.Pattern).
+				Name(route.Name).
+				Handler(jwtMiddleware.Handler(route.HandlerFunc))
+		} else {
+			router.
+			Methods(route.Method).
+				Path(route.Pattern).
+				Name(route.Name).
+				Handler(route.HandlerFunc)
+		}
 	}
 
 	return router

@@ -277,3 +277,11 @@ make , new :
  ☐ In case we want to have custom routes we can do that as well
  ☐ In taht case we use the second parameter of the ListenAndServe which will take the handler or Mux which wil lbe executed internally without the function being passed to the HandlFunc 
 
+
+
+
+
+Fina points :
+ ☐ No ORM 
+ ☐ JWT using HMAC algo
+ ☐ 

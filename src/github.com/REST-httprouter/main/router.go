@@ -17,7 +17,7 @@ func NewRouter() *httprouter.Router {
 	router := httprouter.New()
 	router.GET("/", Index)
 	router.GET("/Todos", TodoIndex)
-	router.GET("/Todos/:todoId", TodoShow)
+	router.POST("/Todos/:todoId", TodoShow)
 	router.GET("/getToken", getToken)
 	return router
 }

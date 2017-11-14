@@ -28,9 +28,14 @@ func TodoIndex(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	}
 }
 
-func TodoShow(w http.ResponseWriter, r *http.Request, parameters httprouter.Params) {
+func TodoShow(response http.ResponseWriter, request *http.Request, parameters httprouter.Params) {
 	todoId := parameters.ByName("todoId")
-	fmt.Fprintln(w, "Todo show:", todoId)
+	name := parameters.ByName("name")
+
+
+	fmt.Fprintln(response, "Todo show:", todoId)
+	fmt.Fprintln(response, "name :", name)
+	fmt.Println(request.PostForm)
 }
 
 func getToken(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
@@ -43,5 +48,5 @@ func getToken(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Write([]byte(tokenString))
 	fmt.Println(claims["exp"] )
-	create(tokenString, "HMAC", "1234567")
+	//create(tokenString, "HMAC", "1234567")
 }
