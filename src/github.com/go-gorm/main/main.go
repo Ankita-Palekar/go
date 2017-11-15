@@ -4,6 +4,8 @@ import (
 	"github.com/jinzhu/gorm"
 	_ "github.com/go-sql-driver/mysql"
 	//"fmt"
+	//"time"
+	"fmt"
 )
 
 //type Customer struct {
@@ -19,37 +21,49 @@ type Product struct {
 	Price uint
 }
 
+type User struct {
+	gorm.Model
+	Name      string
+	Profile   Profile
+	ProfileId int
+}
+
+type Profile struct {
+	gorm.Model
+	Name string
+}
+
 func main() {
-	//db, err := gorm.Open("sqlite3", "test.db")
 	db, err := gorm.Open("mysql", "root:root@/invoice_app")
 	if err != nil {
 		panic("failed to connect database")
 	}
 	defer db.Close()
 
-	//// Migrate the schema
-	//db.AutoMigrate(&Customer{})
-	//
-	//// Create
-	//db.Create(&Customer{name: "Ankita palekar", email: "ankita@cdmx.in", phone_no: "9158381548"})
-	//
-	//// Read
-	//var cus Customer
-	//firstCust := db.First(&cus, 1) // find product with id 1
-	//fmt.Println(firstCust)
-	////db.First(&cus, "email = ?", "ankita@cdmx.in") // find product with code l1212
-	//
-	//
-	//
-	//// Update - update product's price to 2000
-	////db.Model(&cus).Update("Price", 2000)
-	//
-	//// Delete - delete product
-	////db.Delete(&cus)
-
 	// Migrate the schema
-	db.AutoMigrate(&Product{})
+	//db.AutoMigrate(&User{}, &Profile{})
+	//createProfile(db, err, "Ankita Profile")
 
-	// Create
-	db.Create(&Product{Code: "L1212", Price: 1000})
+	//createProfile(db, err, "anki")
+	//createUser(db, err, "ankita user")
+
+	//var user User
+	//
+	//var profile Profile
+	//db.Model(&user).Related(&profile)
+	//fmt.Println(user)
+	//fmt.Println(profile)
+	user := Profile{}
+
+
+	db.First(&user)
+	fmt.Println(user)
+}
+
+func createProfile(db *gorm.DB, err error, name string) {
+	db.Create(&Profile{Name: name})
+}
+
+func createUser(db *gorm.DB, err error, name string) {
+	db.Create(&User{Name: name, ProfileId: 1})
 }
